@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solução Corporativa de IA — Análise de Boletins de Bandeira</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #000030;
+            --surface: #0d1117;
+            --surface2: #131720;
+            --surface3: #1a2030;
+            --border: rgba(255, 255, 255, 0.07);
+            --border-strong: rgba(255, 255, 255, 0.13);
+            --accent: #0ea5e9;
+            --accent2: #6366f1;
+            --accent3: #10b981;
+            --warn: #f59e0b;
+            --danger: #ef4444;
+            --text: #e2e8f0;
+            --text-muted: #64748b;
+            --text-dim: #94a3b8;
+            --glow: 0 0 40px rgba(14, 165, 233, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(7, 9, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        /* LAYOUT */
+        main {
+            padding-top: 56px;
+        }
+
+        section {
+            padding: 5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 6rem 2rem 4rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.7s 0.2s forwards;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        h1.hero-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.7s 0.35s forwards;
+        }
+
+        h1.hero-title span {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            max-width: 640px;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeUp 0.7s 0.5s forwards;
+            margin-bottom: 3rem;
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            opacity: 0;
+            animation: fadeUp 0.7s 0.65s forwards;
+        }
+
+        .badge {
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+            border: 1px solid var(--border-strong);
+            color: var(--text-muted);
+            background: var(--surface);
+        }
+
+        /* GRID DECORATION */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 10%;
+            right: -5%;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* SECTION HEADERS */
+        .section-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-label::before {
+            content: '';
+            display: inline-block;
+            width: 18px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            letter-spacing: -0.01em;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.75rem;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+
+        .card:hover {
+            border-color: var(--border-strong);
+            transform: translateY(-2px);
+        }
+
+        .card-accent-blue {
+            border-top: 2px solid var(--accent);
+        }
+
+        .card-accent-indigo {
+            border-top: 2px solid var(--accent2);
+        }
+
+        .card-accent-green {
+            border-top: 2px solid var(--accent3);
+        }
+
+        .card-accent-yellow {
+            border-top: 2px solid var(--warn);
+        }
+
+        /* GRID LAYOUTS */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+        }
+
+        /* OBJECTIVE BULLETS */
+        .objective-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .objective-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+        }
+
+        .objective-list li::before {
+            content: '→';
+            color: var(--accent);
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* COMPARISON TABLE */
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        thead th {
+            background: var(--surface2);
+            padding: 0.9rem 1.1rem;
+            text-align: left;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-strong);
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: var(--surface2);
+        }
+
+        td {
+            padding: 0.85rem 1.1rem;
+            color: var(--text-dim);
+            vertical-align: middle;
+        }
+
+        td:first-child {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .th-copilot {
+            color: var(--text-muted) !important;
+        }
+
+        .th-m365 {
+            color: var(--warn) !important;
+        }
+
+        .th-studio {
+            color: var(--accent3) !important;
+        }
+
+        .tag-low {
+            color: var(--danger);
+            font-size: 0.8rem;
+        }
+
+        .tag-mid {
+            color: var(--warn);
+            font-size: 0.8rem;
+        }
+
+        .tag-high {
+            color: var(--accent3);
+            font-size: 0.8rem;
+        }
+
+        .tag-native {
+            color: var(--accent);
+            font-size: 0.8rem;
+        }
+
+        /* PLATFORM CARDS */
+        .platform-section {
+            margin-top: 2.5rem;
+        }
+
+        .platform-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .platform-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .icon-gray {
+            background: rgba(100, 116, 139, 0.15);
+            border: 1px solid rgba(100, 116, 139, 0.2);
+        }
+
+        .icon-yellow {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .icon-green {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .verdict-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.9rem;
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        .verdict-no {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .verdict-partial {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warn);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .verdict-yes {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent3);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .detail-item {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+        }
+
+        .detail-item .label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-item .value {
+            font-size: 0.9rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .cost-highlight {
+            background: var(--surface2);
+            border: 1px solid var(--border-strong);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .cost-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .cost-sub {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        /* PIPELINE */
+        .pipeline {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .pipeline::before {
+            content: '';
+            position: absolute;
+            left: 21px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+        }
+
+        .pipe-step {
+            display: flex;
+            gap: 1.25rem;
+            padding-bottom: 2rem;
+            position: relative;
+        }
+
+        .pipe-step:last-child {
+            padding-bottom: 0;
+        }
+
+        .pipe-num {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--surface2);
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--accent);
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pipe-content {
+            padding-top: 0.4rem;
+        }
+
+        .pipe-content h4 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.35rem;
+            color: var(--text);
+        }
+
+        .pipe-content p {
+            font-size: 0.88rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pipe-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.5rem;
+        }
+
+        .pipe-tag {
+            font-size: 0.72rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            background: rgba(14, 165, 233, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .pipe-tag.green {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent3);
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .pipe-tag.purple {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--accent2);
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+
+        /* ARCHITECTURE TABLE */
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .arch-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.1rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            transition: border-color 0.2s;
+        }
+
+        .arch-item:hover {
+            border-color: var(--border-strong);
+        }
+
+        .arch-layer {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+
+        .arch-tech {
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        /* COSTS */
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .cost-table td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        .cost-table tr:last-child td {
+            border-bottom: none;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .cost-total {
+            background: var(--surface2);
+        }
+
+        .cost-range {
+            color: var(--accent3) !important;
+        }
+
+        /* EVOLUTION / FUTURE */
+        .evolution-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .evo-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.1rem;
+        }
+
+        .evo-icon {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .evo-card h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .evo-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* PREREQUISITES / RISKS */
+        .alert-box {
+            background: rgba(245, 158, 11, 0.06);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .alert-box h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.9rem;
+            color: var(--warn);
+            margin-bottom: 0.6rem;
+        }
+
+        .alert-box ul {
+            list-style: none;
+        }
+
+        .alert-box li {
+            font-size: 0.87rem;
+            color: var(--text-dim);
+            padding: 0.2rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .alert-box li::before {
+            content: '⚠';
+            position: absolute;
+            left: 0;
+            font-size: 0.7rem;
+            color: var(--warn);
+        }
+
+        .info-box,
+        .info-box-componente {
+            background: rgba(14, 165, 233, 0.05);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .info-box h4,
+        .info-box-componente h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+        }
+
+        .info-box ul,
+        .info-box-componente ul {
+            list-style: none;
+        }
+
+        .info-box li,
+        .info-box-componente li {
+            font-size: 0.87rem;
+            color: var(--text-dim);
+            padding: 0.2rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .info-box li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .info-box-componente li {
+            font-size: 0.87rem;
+            color: var(--text-dim);
+            padding: 0.2rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .info-box-componente li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .info-box-componente li:last-of-type::before {
+            content: '⚠';
+            position: absolute;
+            left: 0;
+            font-size: 0.7rem;
+            color: var(--warn);
+        }
+
+
+        /* CONCLUSION */
+        .conclusion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-top: 2rem;
+        }
+
+        .conclusion-card {
+            border-radius: 12px;
+            padding: 1.75rem;
+            border: 1px solid var(--border);
+        }
+
+        .conclusion-card.no {
+            background: rgba(239, 68, 68, 0.04);
+            border-color: rgba(239, 68, 68, 0.15);
+        }
+
+        .conclusion-card.partial {
+            background: rgba(245, 158, 11, 0.04);
+            border-color: rgba(245, 158, 11, 0.15);
+        }
+
+        .conclusion-card.yes {
+            background: rgba(16, 185, 129, 0.05);
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .conclusion-verdict {
+            font-size: 1.6rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .conclusion-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .conclusion-card p {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* DIVIDER */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--surface3);
+            border-radius: 3px;
+        }
+
+        /* HIGHLIGHT */
+        .hl-blue {
+            color: var(--accent);
+        }
+
+        .hl-green {
+            color: var(--accent3);
+        }
+
+        .hl-yellow {
+            color: var(--warn);
+        }
+
+        /* TOP ACCENT LINE */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+            z-index: 999;
+        }
+
+        /* PRINT FRIENDLY */
+        @media print {
+
+            nav,
+            body::before {
+                display: none;
+            }
+
+            main {
+                padding-top: 0;
+            }
+
+            .hero {
+                min-height: auto;
+            }
+        }
+
+        @media (max-width: 640px) {
+            section {
+                padding: 3rem 1.25rem;
+            }
+
+            .hero {
+                padding: 4rem 1.25rem 2rem;
+            }
+
+            nav {
+                padding: 0 1.25rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-brand">Agente IA · Boletins de Bandeira</div>
+        <ul class="nav-links">
+            <li><a href="#objetivo">Objetivo</a></li>
+            <li><a href="#plataformas">Plataformas</a></li>
+            <li><a href="#pipeline">Pipeline</a></li>
+            <li><a href="#arquitetura">Arquitetura</a></li>
+            <li><a href="#evolucao">Evolução</a></li>
+            <li><a href="#conclusao">Conclusão</a></li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <!-- HERO -->
+        <div class="hero">
+            <div class="hero-eyebrow">Análise Técnica · Enterprise AI</div>
+            <h1 class="hero-title">Solução Corporativa de IA<br><span>para Análise de Boletins de Bandeira</span></h1>
+            <p class="hero-sub">Avaliação de plataformas Microsoft Copilot, arquitetura de agente enterprise e roadmap
+                de implementação para processamento inteligente de documentos regulatórios.</p>
+            <div class="hero-badges">
+                <span class="badge">RAG / Document Intelligence</span>
+                <span class="badge">Microsoft Copilot Studio</span>
+                <span class="badge">SharePoint + Power Automate</span>
+                <span class="badge">Azure OpenAI</span>
+                <span class="badge">Sistemas Legados PL/I</span>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- OBJETIVO -->
+        <section id="objetivo">
+            <div class="reveal">
+                <div class="section-label">01 · Objetivo</div>
+                <h2>O que a solução precisa resolver</h2>
+                <p>Implementar um agente corporativo de IA especializado em análise documental para processamento de
+                    boletins de bandeira, operando sobre um repositório SharePoint com documentos PDF e DOC versionados
+                    por bandeira, boletim e vigência.</p>
+                <ul class="objective-list">
+                    <li>Identificação de mudanças mandatórias</li>
+                    <li>Detecção de alterações de layout</li>
+                    <li>Análise comparativa entre versões</li>
+                    <li>Geração automatizada de checklists de teste</li>
+                    <li>Apoio à análise de impacto funcional</li>
+                    <li>Rastreabilidade documental end-to-end</li>
+                    <li>Suporte a sistemas legados em PL/I</li>
+                    <li>Classificação de criticidade regulatória</li>
+                </ul>
+            </div>
+
+            <div class="reveal" style="margin-top: 2.5rem;">
+                <div class="grid-3" style="margin-top: 1rem;">
+                    <div class="card card-accent-blue">
+                        <h3>Contexto Técnico</h3>
+                        <p>Cenário de <strong>Enterprise Document Intelligence</strong> com RAG, automação regulatória e
+                            governança documental corporativa integrada a sistemas críticos.</p>
+                    </div>
+                    <div class="card card-accent-indigo">
+                        <h3>Repositório Principal</h3>
+                        <p><strong>Microsoft SharePoint</strong> como fonte de verdade para PDFs e DOCs versionados.
+                            Gatilhos automáticos via Power Automate a cada novo upload.</p>
+                    </div>
+                    <div class="card card-accent-green">
+                        <h3>Escopo de Usuários</h3>
+                        <p>Operação para <strong>~16 usuários</strong> com perfis distintos (analistas, desenvolvedores
+                            PL/I, gestores). RBAC e segregação por papel são requisitos não-negociáveis.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- COMPARATIVO -->
+        <section id="plataformas">
+            <div class="reveal">
+                <div class="section-label">02 · Comparativo de Plataformas</div>
+                <h2>Copilot Chat vs M365 Copilot vs Copilot Studio</h2>
+                <p>Avaliação técnica das três opções disponíveis no ecossistema Microsoft frente aos requisitos do
+                    cenário corporativo.</p>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Critério</th>
+                                <th class="th-copilot">Copilot Chat</th>
+                                <th class="th-m365">M365 Copilot</th>
+                                <th class="th-studio">Copilot Studio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Objetivo principal</td>
+                                <td>Assistente individual</td>
+                                <td>Assist. corporativo contextual</td>
+                                <td>Plataforma enterprise p/ agentes</td>
+                            </tr>
+                            <tr>
+                                <td>Criação de agente corporativo</td>
+                                <td class="tag-low">Limitada</td>
+                                <td class="tag-mid">Parcial</td>
+                                <td class="tag-high">Completa</td>
+                            </tr>
+                            <tr>
+                                <td>Compartilhamento organizacional</td>
+                                <td class="tag-low">Restrito</td>
+                                <td class="tag-mid">Bom</td>
+                                <td class="tag-high">Avançado</td>
+                            </tr>
+                            <tr>
+                                <td>Integração SharePoint</td>
+                                <td class="tag-low">Limitada</td>
+                                <td class="tag-native">Nativa</td>
+                                <td class="tag-native">Nativa</td>
+                            </tr>
+                            <tr>
+                                <td>Processamento documental</td>
+                                <td class="tag-low">Básico</td>
+                                <td class="tag-mid">Intermediário</td>
+                                <td class="tag-high">Avançado</td>
+                            </tr>
+                            <tr>
+                                <td>Automação de workflows</td>
+                                <td class="tag-low">Não suportado</td>
+                                <td class="tag-mid">Parcial</td>
+                                <td class="tag-high">Completo</td>
+                            </tr>
+                            <tr>
+                                <td>Governança corporativa (RBAC)</td>
+                                <td class="tag-low">Baixa</td>
+                                <td class="tag-mid">Média/Alta</td>
+                                <td class="tag-high">Granular</td>
+                            </tr>
+                            <tr>
+                                <td>Integração Oracle</td>
+                                <td class="tag-low">Limitada</td>
+                                <td class="tag-mid">Parcial</td>
+                                <td class="tag-high">Avançada</td>
+                            </tr>
+                            <tr>
+                                <td>Microsoft Graph</td>
+                                <td class="tag-mid">Parcial</td>
+                                <td class="tag-native">Nativa</td>
+                                <td class="tag-native">Nativa</td>
+                            </tr>
+                            <tr>
+                                <td>GitHub / Azure DevOps</td>
+                                <td class="tag-low">Básica</td>
+                                <td class="tag-mid">Parcial</td>
+                                <td class="tag-high">Boa</td>
+                            </tr>
+                            <tr>
+                                <td>APIs externas</td>
+                                <td class="tag-low">Limitada</td>
+                                <td class="tag-mid">Média</td>
+                                <td class="tag-high">Avançada</td>
+                            </tr>
+                            <tr>
+                                <td>Gestão DEV / HML / PRD</td>
+                                <td class="tag-low">Não suportado</td>
+                                <td class="tag-low">Limitada</td>
+                                <td class="tag-high">Suportado</td>
+                            </tr>
+                            <tr>
+                                <td>Auditoria e rastreabilidade</td>
+                                <td class="tag-low">Básica</td>
+                                <td class="tag-mid">Média</td>
+                                <td class="tag-high">Avançada</td>
+                            </tr>
+                            <tr>
+                                <td>Escalabilidade</td>
+                                <td class="tag-low">Baixa</td>
+                                <td class="tag-mid">Média</td>
+                                <td class="tag-high">Alta</td>
+                            </tr>
+                            <tr>
+                                <td>Aderência ao cenário</td>
+                                <td class="tag-low">Baixa</td>
+                                <td class="tag-mid">Média</td>
+                                <td class="tag-high">Alta</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PLATFORM DETAILS -->
+            <div class="platform-section reveal" style="margin-top:3rem;">
+                <div class="platform-header">
+                    <div class="platform-icon icon-gray">💬</div>
+                    <div>
+                        <h3>1. Copilot Chat (Free / Pro)</h3>
+                        <div class="verdict-badge verdict-no">❌ Não recomendado como plataforma principal</div>
+                    </div>
+                </div>
+                <p>Orientado a produtividade individual. Não oferece os mecanismos de governança, versionamento ou
+                    automação necessários para operação enterprise de análise regulatória.</p>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="label">Custo (16 usuários)</div>
+                        <div class="value">~R$ 1.700–2.000/mês</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Persistência contextual</div>
+                        <div class="value">Limitada</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Ambientes DEV/HML/PRD</div>
+                        <div class="value">Não suportado</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Uso recomendado</div>
+                        <div class="value">POC e validação de prompts</div>
+                    </div>
+                </div>
+                <div class="alert-box" style="margin-top:1rem;">
+                    <h4>Limitações críticas</h4>
+                    <ul>
+                        <li>Sem versionamento de agente ou pipeline de publicação corporativa</li>
+                        <li>Sem auditoria de uso ou controle de acesso refinado</li>
+                        <li>Sem integração funcional com workflows automáticos</li>
+                        <li>Sem comparação estruturada entre versões documentais</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="platform-section reveal" style="margin-top:2.5rem;">
+                <div class="platform-header">
+                    <div class="platform-icon icon-yellow">🏢</div>
+                    <div>
+                        <h3>2. Microsoft 365 Copilot</h3>
+                        <div class="verdict-badge verdict-partial">🟡 Recomendado como camada complementar</div>
+                    </div>
+                </div>
+                <p>Integração nativa com o ecossistema Microsoft (SharePoint, Teams, Outlook, Graph) oferece boa
+                    contextualização corporativa. Entretanto, ainda apresenta lacunas para workflows complexos e
+                    automações multiestágio.</p>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="label">Custo (16 usuários)</div>
+                        <div class="value">~R$ 2.600–3.000/mês</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">SharePoint</div>
+                        <div class="value">Integração nativa</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Microsoft Graph</div>
+                        <div class="value">Nativa</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Pipelines complexos</div>
+                        <div class="value">Limitados</div>
+                    </div>
+                </div>
+                <div class="info-box" style="margin-top:1rem;">
+                    <h4>Melhor uso no ecossistema proposto</h4>
+                    <ul>
+                        <li>Interface de busca e consulta documental para usuários finais</li>
+                        <li>Apoio em Word/Excel para leitura e síntese de boletins</li>
+                        <li>Assistência em Teams para comunicação e disseminação de análises</li>
+                        <li>Camada complementar ao Copilot Studio para produtividade diária</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="platform-section reveal" style="margin-top:2.5rem;">
+                <div class="platform-header">
+                    <div class="platform-icon icon-green">⚙️</div>
+                    <div>
+                        <h3>3. Microsoft Copilot Studio</h3>
+                        <div class="verdict-badge verdict-yes">✅ Melhor aderência técnica e corporativa</div>
+                    </div>
+                </div>
+                <p>Plataforma projetada para criação de agentes enterprise com capacidades avançadas de orquestração,
+                    integração e governança. É o núcleo recomendado para esta solução.</p>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="label">Tipo de solução</div>
+                        <div class="value">Agente enterprise customizado</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Ambientes DEV/HML/PRD</div>
+                        <div class="value">Suportados</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">RBAC</div>
+                        <div class="value">Granular</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Auditoria</div>
+                        <div class="value">Avançada</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Power Automate</div>
+                        <div class="value">Integração nativa</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Azure OpenAI</div>
+                        <div class="value">Integração nativa</div>
+                    </div>
+                </div>
+
+                <div class="alert-box"
+                    style="margin-top:1rem; background: rgba(99,102,241,0.05); border-color: rgba(99,102,241,0.2);">
+                    <h4 style="color: var(--accent2);">⚠ Pontos de atenção no Copilot Studio</h4>
+                    <ul>
+                        <li>Requer licença Copilot Studio add-on (separada do M365 Copilot) ou Power Virtual Agents
+                            Premium</li>
+                        <li>Processamento de PDFs longos e OCR pode demandar Azure AI Document Intelligence complementar
+                        </li>
+                        <li>Comparação semântica entre versões exige design cuidadoso do pipeline de RAG</li>
+                        <li>Gestão de ambientes (ALM) requer Power Platform ALM + Azure DevOps configurados</li>
+                        <li>Limites de tokens por chamada ao Azure OpenAI devem ser planejados para documentos extensos
+                        </li>
+                        <li>Custo variável de acordo com número de mensagens processadas pelo agente</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- PIPELINE -->
+        <section id="pipeline">
+            <div class="reveal">
+                <div class="section-label">03 · Fluxo Operacional</div>
+                <h2>Pipeline de processamento proposto</h2>
+                <p>Arquitetura de operação do agente do upload do boletim até a entrega dos artefatos para os times de
+                    desenvolvimento e sustentação.</p>
+
+                <div class="pipeline">
+
+                    <div class="pipe-step">
+                        <div class="pipe-num">1</div>
+                        <div class="pipe-content">
+                            <h4>Upload do boletim no SharePoint</h4>
+                            <p>Publicação do documento PDF ou DOC no repositório SharePoint, organizado por bandeira,
+                                número do boletim e vigência. Versionamento automático habilitado.</p>
+                            <div class="pipe-tags">
+                                <span class="pipe-tag">SharePoint</span>
+                                <span class="pipe-tag">Metadados</span>
+                                <span class="pipe-tag purple">Versionamento</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pipe-step">
+                        <div class="pipe-num">2</div>
+                        <div class="pipe-content">
+                            <h4>Trigger automático via Power Automate</h4>
+                            <p>Detecção de novos uploads ou atualizações. Extração de metadados (bandeira, versão, data
+                                de vigência) e disparo do pipeline de processamento.</p>
+                            <div class="pipe-tags">
+                                <span class="pipe-tag">Power Automate</span>
+                                <span class="pipe-tag green">Event-driven</span>
+                                <span class="pipe-tag">Metadados</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pipe-step">
+                        <div class="pipe-num">3</div>
+                        <div class="pipe-content">
+                            <h4>Extração e pré-processamento documental</h4>
+                            <p>Conversão do documento para texto estruturado via Azure AI Document Intelligence (OCR,
+                                extração de tabelas, campos). Chunking semântico para indexação no vetor de embeddings.
+                            </p>
+                            <div class="pipe-tags">
+                                <span class="pipe-tag">Azure AI Document Intelligence</span>
+                                <span class="pipe-tag purple">OCR + Tabelas</span>
+                                <span class="pipe-tag">Chunking semântico</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pipe-step">
+                        <div class="pipe-num">4</div>
+                        <div class="pipe-content">
+                            <h4>Análise pelo agente Copilot Studio + Azure OpenAI</h4>
+                            <p>O agente executa a análise inteligente do boletim com base no contexto extraído e nas
+                                versões anteriores indexadas.</p>
+                            <div class="pipe-tags">
+                                <span class="pipe-tag">Copilot Studio</span>
+                                <span class="pipe-tag">Azure OpenAI (GPT-4o)</span>
+                                <span class="pipe-tag green">RAG</span>
+                            </div>
+                            <div style="margin-top:0.75rem;" class="info-box">
+                                <h4>Atividades executadas pelo agente</h4>
+                                <ul>
+                                    <li>Identificação de nova versão e comparação com versão anterior</li>
+                                    <li>Detecção de mudanças mandatórias e alterações de layout</li>
+                                    <li>Extração de regras, campos e fluxos impactados</li>
+                                    <li>Classificação de impacto: Crítico / Alto / Médio / Baixo</li>
+                                    <li>Mapeamento de sistemas e programas PL/I potencialmente impactados</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pipe-step">
+                        <div class="pipe-num">5</div>
+                        <div class="pipe-content">
+                            <h4>Geração de artefatos estruturados</h4>
+                            <p>O agente produz automaticamente os documentos de trabalho para os times de
+                                desenvolvimento e QA.</p>
+                            <div class="pipe-tags">
+                                <span class="pipe-tag green">Checklist de testes</span>
+                                <span class="pipe-tag green">Análise funcional</span>
+                                <span class="pipe-tag purple">Resumo executivo</span>
+                                <span class="pipe-tag">Rastreabilidade</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pipe-step">
+                        <div class="pipe-num">6</div>
+                        <div class="pipe-content">
+                            <h4>Publicação e distribuição organizacional</h4>
+                            <p>Resultados publicados de forma estruturada no SharePoint e notificação distribuída via
+                                Teams para os grupos responsáveis, com links de acesso direto e urgência classificada.
+                            </p>
+                            <div class="pipe-tags">
+                                <span class="pipe-tag">Teams</span>
+                                <span class="pipe-tag">SharePoint</span>
+                                <span class="pipe-tag purple">Azure DevOps (backlog)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- ARQUITETURA -->
+        <section id="arquitetura">
+            <div class="reveal">
+                <div class="section-label">04 · Arquitetura</div>
+                <h2>Stack técnico recomendado</h2>
+                <p>Cada camada da solução tem uma tecnologia principal recomendada, estruturada para garantir
+                    escalabilidade, governança e integração corporativa.</p>
+
+                <div class="arch-grid">
+                    <div class="arch-item">
+                        <div class="arch-layer">Repositório documental</div>
+                        <div class="arch-tech">SharePoint</div>
+                    </div>
+                    <div class="arch-item">
+                        <div class="arch-layer">Agente corporativo</div>
+                        <div class="arch-tech">Copilot Studio</div>
+                    </div>
+                    <div class="arch-item">
+                        <div class="arch-layer">Workflow e orquestração</div>
+                        <div class="arch-tech">Power Automate</div>
+                    </div>
+                    <div class="arch-item">
+                        <div class="arch-layer">IA generativa</div>
+                        <div class="arch-tech">Azure OpenAI (GPT-4o)</div>
+                    </div>
+                    <div class="arch-item">
+                        <div class="arch-layer">Extração documental / OCR</div>
+                        <div class="arch-tech">Azure AI Document Intelligence</div>
+                    </div>
+                    <div class="arch-item">
+                        <div class="arch-layer">Busca semântica / RAG</div>
+                        <div class="arch-tech">Azure AI Search</div>
+                    </div>
+                    <div class="arch-item">
+                        <div class="arch-layer">Contextualização organizacional</div>
+                        <div class="arch-tech">Microsoft Graph API</div>
+                    </div>
+                    <div class="arch-item">
+                        <div class="arch-layer">Gestão de backlog e DevOps</div>
+                        <div class="arch-tech">Azure DevOps</div>
+                    </div>
+                    <div class="arch-item">
+                        <div class="arch-layer">Versionamento técnico</div>
+                        <div class="arch-tech">GitHub</div>
+                    </div>
+                    <div class="arch-item">
+                        <div class="arch-layer">Camada de produtividade</div>
+                        <div class="arch-tech">Microsoft 365 Copilot</div>
+                    </div>
+                    <div class="arch-item">
+                        <div class="arch-layer">Identidade e RBAC</div>
+                        <div class="arch-tech">Azure Active Directory (Entra ID)</div>
+                    </div>
+                    <div class="arch-item">
+                        <div class="arch-layer">Integração sistemas legados</div>
+                        <div class="arch-tech">API Gateway / Azure Logic Apps</div>
+                    </div>
+                </div>
+
+                <div class="info-box-componente" style="margin-top: 2rem;">
+                    <h4>SharePoint</h4>
+                    <ul>
+
+                        <li>Atua como repositório corporativo central dos boletins, versões e documentos relacionados
+                        </li>
+                        <li>Permite versionamento nativo, controle documental e governança de acesso integrada ao
+                            ecossistema Microsoft 365</li>
+                        <li>Serve como fonte primária para ingestão, indexação e rastreabilidade dos conteúdos
+                            processados pelo pipeline de IA</li>
+                        <li>Sem ele, não existe uma camada estruturada de armazenamento
+                            corporativo com histórico
+                            auditável e integração nativa com os agentes</li>
+                    </ul>
+                </div>
+                <div class="info-box-componente" style="margin-top: 2rem;">
+                    <h4>Copilot Studio</h4>
+                    <ul>
+                        <li>É a plataforma responsável pela construção, orquestração e publicação do agente
+                            conversacional corporativo</li>
+                        <li>Permite integrar Azure AI Search, fluxos do Power Automate e serviços cognitivos em uma
+                            experiência unificada</li>
+                        <li>Centraliza intents, prompts, memória contextual e regras de interação do agente
+                            especializado em compliance e boletins</li>
+                        <li>Sem ele, não existe uma camada de experiência conversacional corporativa integrada aos
+                            serviços de IA da Microsoft</li>
+                    </ul>
+                </div>
+                <div class="info-box-componente" style="margin-top: 2rem;">
+                    <h4>Power Automate</h4>
+                    <ul>
+                        <li>Atua como camada de automação e orquestração entre SharePoint, serviços de IA e processos
+                            corporativos</li>
+                        <li>Permite disparar fluxos automáticos para ingestão, classificação, indexação e atualização de
+                            documentos</li>
+                        <li>Garante integração event-driven entre os componentes do ecossistema sem necessidade de
+                            desenvolvimento excessivo</li>
+                        <li>Sem ele, os processos dependeriam de execução manual ou integrações customizadas de maior
+                            complexidade operacional</li>
+                    </ul>
+                </div>
+                <div class="info-box-componente" style="margin-top: 2rem;">
+                    <h4>Azure OpenAI (GPT-4o)</h4>
+                    <ul>
+                        <li>É o modelo de linguagem responsável pela interpretação contextual, reasoning e geração das
+                            respostas do agente</li>
+                        <li>Permite sumarização, comparação semântica, extração de insights e análise avançada dos
+                            boletins regulatórios</li>
+                        <li>Trabalha em conjunto com o Azure AI Search no padrão RAG para reduzir alucinação e aumentar
+                            precisão contextual</li>
+                        <li>Sem ele, o sistema perde capacidade analítica avançada e interação em linguagem natural
+                            orientada ao domínio</li>
+                    </ul>
+                </div>
+                <div class="info-box-componente" style="margin-top: 2rem;">
+                    <h4>Azure AI Document Intelligence</h4>
+                    <ul>
+                        <li>É o serviço responsável pela extração estruturada de informações a partir de PDFs, imagens e
+                            documentos não estruturados</li>
+                        <li>Permite identificar tabelas, campos, layouts e conteúdos relevantes antes do processo de
+                            indexação vetorial</li>
+                        <li>Reduz esforço manual de tratamento documental e aumenta qualidade dos dados enviados ao
+                            mecanismo RAG</li>
+                        <li>Sem ele, documentos complexos exigiriam parsing customizado e maior intervenção humana no
+                            pré-processamento</li>
+                    </ul>
+                </div>
+                <div class="info-box-componente" style="margin-top: 2rem;">
+                    <h4>Azure AI Search</h4>
+                    <ul>
+                        <li>É o mecanismo de índice vetorial que viabiliza o RAG sobre os boletins indexados</li>
+                        <li>Permite busca semântica e comparação entre versões com contexto enriquecido</li>
+                        <li>Se integra nativamente ao Copilot Studio como knowledge source customizado</li>
+                        <li>Sem ele, o agente não consegue comparar versões de forma estruturada e rastreável</li>
+                    </ul>
+                </div>
+                <div class="info-box-componente" style="margin-top: 2rem;">
+                    <h4>Microsoft Graph API</h4>
+                    <ul>
+                        <li>Atua como camada unificada de integração com serviços do Microsoft 365 e diretórios
+                            corporativos</li>
+                        <li>Permite acessar usuários, grupos, permissões, arquivos, calendários e informações
+                            organizacionais de forma centralizada</li>
+                        <li>Viabiliza personalização contextual do agente com base em identidade, perfil e permissões do
+                            usuário</li>
+                        <li>Sem ela, integrações entre o agente e o ecossistema Microsoft dependeriam de múltiplas APIs
+                            isoladas e maior complexidade técnica</li>
+                    </ul>
+                </div>
+                <div class="info-box-componente" style="margin-top: 2rem;">
+                    <h4>Azure DevOps</h4>
+                    <ul>
+                        <li>Atua como plataforma de gestão do ciclo de vida da aplicação, pipelines CI/CD e governança
+                            de entregas</li>
+                        <li>Permite automação de build, deploy, testes e gerenciamento ágil das demandas do projeto</li>
+                        <li>Integra desenvolvimento, operações e versionamento em um fluxo controlado e auditável</li>
+                        <li>Sem ele, a esteira de entrega perde automação, rastreabilidade operacional e padronização de
+                            deployment corporativo</li>
+                    </ul>
+                </div>
+                <div class="info-box-componente" style="margin-top: 2rem;">
+                    <h4>GitHub</h4>
+                    <ul>
+                        <li>É a plataforma de versionamento e colaboração utilizada para gestão do código-fonte, prompts
+                            e artefatos da solução</li>
+                        <li>Permite controle de branches, revisão técnica, rastreabilidade de mudanças e automação de
+                            pipelines DevOps</li>
+                        <li>Centraliza documentação técnica, infraestrutura como código e versionamento dos componentes
+                            de IA</li>
+                        <li>Sem ele, o ciclo de desenvolvimento perde governança, colaboração estruturada e controle
+                            eficiente de evolução da solução</li>
+                    </ul>
+                </div>
+                <div class="info-box-componente" style="margin-top: 2rem;">
+                    <h4>Microsoft 365 Copilot</h4>
+                    <ul>
+                        <li>Atua como camada de produtividade inteligente integrada ao ecossistema Microsoft 365</li>
+                        <li>Permite consumir informações corporativas, documentos e insights diretamente em aplicações
+                            como Teams, Outlook, Word e Excel</li>
+                        <li>Pode utilizar os agentes especializados desenvolvidos no Copilot Studio como extensões
+                            contextuais de negócio</li>
+                        <li>Sem ele, os usuários perdem a experiência de IA integrada ao fluxo operacional diário dentro
+                            das ferramentas corporativas</li>
+                    </ul>
+                </div>
+
+                <div class="info-box-componente" style="margin-top: 2rem;">
+                    <h4>Azure Active Directory (Entra ID)</h4>
+                    <ul>
+                        <li>É o serviço de identidade e autenticação responsável pelo controle de acesso corporativo da
+                            solução</li>
+                        <li>Permite autenticação centralizada, Single Sign-On (SSO) e aplicação de políticas de
+                            segurança baseadas em identidade</li>
+                        <li>Garante segregação de acesso aos boletins, agentes e recursos cognitivos conforme perfil
+                            organizacional</li>
+                        <li>Sem ele, a solução perde governança de identidade corporativa e controle seguro de
+                            autenticação e autorização</li>
+                    </ul>
+                </div>
+
+                <div class="info-box-componente" style="margin-top: 2rem;">
+                    <h4>API Gateway / Azure Logic Apps</h4>
+                    <ul>
+                        <li>Atua como camada de integração, orquestração e exposição controlada dos serviços e APIs da
+                            solução</li>
+                        <li>Permite conectar sistemas internos e externos com baixa complexidade de desenvolvimento e
+                            suporte a workflows enterprise</li>
+                        <li>Facilita controle de autenticação, transformação de payloads, governança de integrações e
+                            monitoramento operacional</li>
+                        <li>Sem ele, integrações entre sistemas dependeriam de implementações customizadas com maior
+                            acoplamento e menor governança arquitetural</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- CUSTOS -->
+        <section id="custos">
+            <div class="reveal">
+                <div class="section-label">05 · Estimativa de Custos</div>
+                <h2>Investimento mensal estimado</h2>
+                <p>Custos baseados em volume moderado de documentos, 16 usuários e frequência regular de processamento.
+                    Valores em USD com referência aproximada em BRL.</p>
+
+                <div class="grid-2">
+                    <div class="card card-accent-blue">
+                        <h3>Cenário Núcleo (Copilot Studio)</h3>
+                        <table class="cost-table">
+                            <tr>
+                                <td>Copilot Studio (licença + mensagens)</td>
+                                <td class="cost-range">US$ 200–500/mês</td>
+                            </tr>
+                            <tr>
+                                <td>Azure OpenAI (tokens)</td>
+                                <td class="cost-range">US$ 50–300/mês</td>
+                            </tr>
+                            <tr>
+                                <td>Power Automate (Premium)</td>
+                                <td class="cost-range">US$ 100–300/mês</td>
+                            </tr>
+                            <tr>
+                                <td>Azure AI Document Intelligence</td>
+                                <td class="cost-range">US$ 30–150/mês</td>
+                            </tr>
+                            <tr>
+                                <td>Azure AI Search</td>
+                                <td class="cost-range">US$ 50–200/mês</td>
+                            </tr>
+                            <tr class="cost-total">
+                                <td>Total estimado</td>
+                                <td class="cost-range">US$ 430–1.450/mês</td>
+                            </tr>
+                        </table>
+                        <div class="cost-highlight">
+                            <div>
+                                <div class="cost-number">R$ 2.400–8.000</div>
+                                <div class="cost-sub">estimativa mensal em BRL (câmbio ~5,5)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-accent-indigo">
+                        <h3>Camada Complementar (M365 Copilot)</h3>
+                        <table class="cost-table">
+                            <tr>
+                                <td>M365 Copilot (16 usuários × US$30)</td>
+                                <td class="cost-range">US$ 480/mês</td>
+                            </tr>
+                            <tr>
+                                <td>SharePoint (já incluso no M365)</td>
+                                <td class="cost-range">—</td>
+                            </tr>
+                            <tr>
+                                <td>Teams (já incluso no M365)</td>
+                                <td class="cost-range">—</td>
+                            </tr>
+                            <tr class="cost-total">
+                                <td>Total complementar</td>
+                                <td class="cost-range">US$ 480/mês</td>
+                            </tr>
+                        </table>
+                        <div class="cost-highlight">
+                            <div>
+                                <div class="cost-number">R$ 2.600–3.000</div>
+                                <div class="cost-sub">custo adicional da camada de produtividade</div>
+                            </div>
+                        </div>
+                        <p style="font-size:0.82rem; margin-top:0.75rem;">⚠ Verificar se a organização já possui
+                            licenças M365 E3/E5 elegíveis que cubram parte desse custo.</p>
+                    </div>
+                </div>
+
+                <div class="alert-box" style="margin-top:1.5rem;">
+                    <h4>Variáveis que impactam o custo</h4>
+                    <ul>
+                        <li>Volume de documentos processados por mês (número de boletins e páginas)</li>
+                        <li>Quantidade de mensagens trocadas com o agente (modelo de billing do Copilot Studio)</li>
+                        <li>Uso de OCR para documentos digitalizados (Azure AI Document Intelligence)</li>
+                        <li>Tamanho do índice vetorial no Azure AI Search</li>
+                        <li>Licenças M365 já existentes na organização (redução de custo potencial)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- EVOLUÇÃO FUTURA -->
+        <section id="evolucao">
+            <div class="reveal">
+                <div class="section-label">06 · Evolução Futura</div>
+                <h2>Apoio ao desenvolvimento e sustentação PL/I</h2>
+                <p>Como evolução planejada da solução, o agente poderá transformar análises documentais em artefatos
+                    técnicos estruturados, acelerando o ciclo de manutenção dos sistemas legados em PL/I através de
+                    práticas de <strong>Spec-Driven Development</strong>.</p>
+
+                <div class="evolution-cards">
+                    <div class="evo-card">
+                        <div class="evo-icon">📋</div>
+                        <h4>User Stories automáticas</h4>
+                        <p>Geração de US no padrão do time a partir das mudanças mandatórias identificadas no boletim.
+                        </p>
+                    </div>
+                    <div class="evo-card">
+                        <div class="evo-icon">✅</div>
+                        <h4>Critérios de aceite</h4>
+                        <p>Critérios estruturados derivados das regras extraídas pelo agente, reduzindo ambiguidades de
+                            interpretação.</p>
+                    </div>
+                    <div class="evo-card">
+                        <div class="evo-icon">🔍</div>
+                        <h4>Análise de impacto técnico</h4>
+                        <p>Mapeamento preliminar de programas PL/I, copybooks e interfaces potencialmente impactados
+                            pelas mudanças.</p>
+                    </div>
+                    <div class="evo-card">
+                        <div class="evo-icon">🔗</div>
+                        <h4>Rastreabilidade boletim → código</h4>
+                        <p>Ligação entre cada item do boletim e os artefatos de desenvolvimento correspondentes no Azure
+                            DevOps.</p>
+                    </div>
+                    <div class="evo-card">
+                        <div class="evo-icon">📝</div>
+                        <h4>Especificações funcionais</h4>
+                        <p>Rascunho estruturado de especificações prontas para revisão técnica, reduzindo retrabalho de
+                            refinamento.</p>
+                    </div>
+                    <div class="evo-card">
+                        <div class="evo-icon">🧪</div>
+                        <h4>Checklist técnico de entrega</h4>
+                        <p>Checklist automatizado com critérios de qualidade e conformidade regulatória para cada
+                            mudança implementada.</p>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top:1.5rem;">
+                    <h4>Benefícios esperados com essa evolução</h4>
+                    <ul>
+                        <li>Redução de inconsistências interpretativas entre analistas e desenvolvedores</li>
+                        <li>Aceleração do ciclo de refinamento técnico em sprints</li>
+                        <li>Padronização de artefatos entre equipes de sustentação</li>
+                        <li>Melhoria da rastreabilidade funcional entre requisito regulatório e implementação</li>
+                        <li>Redução de retrabalho causado por interpretações divergentes do boletim</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- RISCOS E PREMISSAS -->
+        <section id="riscos">
+            <div class="reveal">
+                <div class="section-label">07 · Riscos e Premissas</div>
+                <h2>O que precisa estar endereçado</h2>
+
+                <div class="grid-2">
+                    <div>
+                        <div class="alert-box">
+                            <h4>Riscos identificados</h4>
+                            <ul>
+                                <li>Qualidade do OCR para boletins digitalizados ou de baixa resolução</li>
+                                <li>Variação de layout entre bandeiras pode exigir pipelines diferenciados</li>
+                                <li>Alucinação do LLM em regras regulatórias críticas — exige validação humana</li>
+                                <li>Dependência de conectividade e disponibilidade dos serviços Azure</li>
+                                <li>Curva de adoção pelos times de desenvolvimento PL/I</li>
+                                <li>Gestão do modelo de custos variáveis conforme crescimento do volume</li>
+                                <li>Governança de dados sensíveis dentro do Azure OpenAI (LGPD)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="info-box">
+                            <h4>Premissas e pré-requisitos</h4>
+                            <ul>
+                                <li>Licenças Azure e M365 provisionadas ou elegíveis para aquisição</li>
+                                <li>SharePoint configurado com estrutura de pastas e metadados definidos</li>
+                                <li>Azure OpenAI aprovado na subscrição (requer aprovação da Microsoft)</li>
+                                <li>Equipe com capacidade de configurar Power Automate + Copilot Studio</li>
+                                <li>Definição de RBAC e grupos de usuários no Entra ID</li>
+                                <li>Inventário mínimo dos sistemas PL/I e domínios cobertos por cada bandeira</li>
+                                <li>Processo de validação humana definido antes da publicação dos artefatos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- CONCLUSÃO -->
+        <section id="conclusao">
+            <div class="reveal">
+                <div class="section-label">08 · Conclusão Executiva</div>
+                <h2>Recomendação final</h2>
+                <p>Para um agente corporativo de análise de boletins de bandeira com os requisitos mapeados, a
+                    arquitetura recomendada combina:</p>
+
+                <div class="conclusion-grid">
+                    <div class="conclusion-card no">
+                        <div class="conclusion-verdict">❌</div>
+                        <h3>Copilot Chat</h3>
+                        <p>Não recomendado como plataforma principal. Útil apenas para POCs rápidas e validação de
+                            prompts em fase exploratória.</p>
+                    </div>
+                    <div class="conclusion-card partial">
+                        <div class="conclusion-verdict">🟡</div>
+                        <h3>Microsoft 365 Copilot</h3>
+                        <p>Recomendado como camada complementar de produtividade, busca contextual e apoio operacional
+                            diário para os usuários.</p>
+                    </div>
+                    <div class="conclusion-card yes">
+                        <div class="conclusion-verdict">✅</div>
+                        <h3>Copilot Studio</h3>
+                        <p>Núcleo da solução. Melhor aderência técnica e corporativa. Combinado com Azure OpenAI, AI
+                            Search e Power Automate forma o pipeline completo.</p>
+                    </div>
+                </div>
+
+                <div class="card"
+                    style="margin-top: 2rem; background: var(--surface2); border-color: var(--border-strong);">
+                    <h3 style="margin-bottom:1rem;">Arquitetura alvo resumida</h3>
+                    <p style="margin-bottom:1rem; font-size:0.9rem;"><strong>Repositório:</strong> SharePoint
+                        &nbsp;·&nbsp; <strong>Agente:</strong> Copilot Studio &nbsp;·&nbsp;
+                        <strong>Orquestração:</strong> Power Automate &nbsp;·&nbsp; <strong>IA:</strong> Azure OpenAI
+                        GPT-4o &nbsp;·&nbsp; <strong>OCR:</strong> Azure AI Document Intelligence &nbsp;·&nbsp;
+                        <strong>RAG:</strong> Azure AI Search &nbsp;·&nbsp; <strong>DevOps:</strong> Azure DevOps +
+                        GitHub &nbsp;·&nbsp; <strong>Produtividade:</strong> M365 Copilot
+                    </p>
+                    <p style="font-size:0.88rem; color:var(--text-muted); margin:0;">A solução não é apenas um chatbot
+                        corporativo — é um pipeline de inteligência documental para operacionalização de mudanças
+                        regulatórias, com rastreabilidade de ponta a ponta e evolução planejada para suporte ao
+                        desenvolvimento PL/I.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            Análise técnica confidencial &nbsp;·&nbsp; Solução Corporativa de IA para Análise de Boletins de Bandeira
+            &nbsp;·&nbsp; 2026
+        </footer>
+
+    </main>
+
+    <script>
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.07 });
+        reveals.forEach(r => io.observe(r));
+    </script>
+</body>
+
+</html>
