@@ -92,7 +92,6 @@
             color: var(--text);
         }
 
-        /* LAYOUT */
         main {
             padding-top: 56px;
         }
@@ -103,7 +102,6 @@
             margin: 0 auto;
         }
 
-        /* HERO */
         .hero {
             min-height: 90vh;
             display: flex;
@@ -196,7 +194,6 @@
             pointer-events: none;
         }
 
-        /* SECTION HEADERS */
         .section-label {
             font-size: 0.72rem;
             letter-spacing: 0.12em;
@@ -238,7 +235,6 @@
             margin-bottom: 1rem;
         }
 
-        /* CARDS */
         .card {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -268,7 +264,6 @@
             border-top: 2px solid var(--warn);
         }
 
-        /* GRID LAYOUTS */
         .grid-2 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -281,7 +276,6 @@
             gap: 1.25rem;
         }
 
-        /* OBJECTIVE BULLETS */
         .objective-list {
             list-style: none;
             display: grid;
@@ -310,7 +304,6 @@
             margin-top: 2px;
         }
 
-        /* COMPARISON TABLE */
         .table-wrap {
             overflow-x: auto;
             border-radius: 12px;
@@ -605,7 +598,6 @@
             border-color: rgba(99, 102, 241, 0.2);
         }
 
-        /* ARCHITECTURE TABLE */
         .arch-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -642,7 +634,6 @@
             color: var(--text);
         }
 
-        /* COSTS */
         .cost-table {
             width: 100%;
             border-collapse: collapse;
@@ -702,7 +693,6 @@
             margin: 0;
         }
 
-        /* PREREQUISITES / RISKS */
         .alert-box {
             background: rgba(245, 158, 11, 0.06);
             border: 1px solid rgba(245, 158, 11, 0.2);
@@ -799,8 +789,6 @@
             color: var(--warn);
         }
 
-
-        /* CONCLUSION */
         .conclusion-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -844,7 +832,6 @@
             margin: 0;
         }
 
-        /* DIVIDER */
         .divider {
             height: 1px;
             background: var(--border);
@@ -852,7 +839,6 @@
             margin: 0 auto;
         }
 
-        /* FOOTER */
         footer {
             padding: 2rem;
             text-align: center;
@@ -863,7 +849,6 @@
             margin: 0 auto;
         }
 
-        /* ANIMATIONS */
         @keyframes fadeUp {
             from {
                 opacity: 0;
@@ -887,7 +872,6 @@
             transform: none;
         }
 
-        /* SCROLLBAR */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -902,7 +886,6 @@
             border-radius: 3px;
         }
 
-        /* HIGHLIGHT */
         .hl-blue {
             color: var(--accent);
         }
@@ -915,7 +898,6 @@
             color: var(--warn);
         }
 
-        /* TOP ACCENT LINE */
         body::before {
             content: '';
             position: fixed;
@@ -927,7 +909,6 @@
             z-index: 999;
         }
 
-        /* PRINT FRIENDLY */
         @media print {
 
             nav,
@@ -966,7 +947,6 @@
 
 <body>
 
-    <!-- NAV -->
     <nav>
         <div class="nav-brand">Agente IA · Boletins de Bandeira</div>
         <ul class="nav-links">
@@ -981,7 +961,6 @@
 
     <main>
 
-        <!-- HERO -->
         <div class="hero">
             <div class="hero-eyebrow">Análise Técnica · Enterprise AI</div>
             <h1 class="hero-title">Solução Corporativa de IA<br><span>para Análise de Boletins de Bandeira</span></h1>
@@ -998,7 +977,6 @@
 
         <div class="divider"></div>
 
-        <!-- OBJETIVO -->
         <section id="objetivo">
             <div class="reveal">
                 <div class="section-label">01 · Objetivo</div>
@@ -1041,7 +1019,6 @@
 
         <div class="divider"></div>
 
-        <!-- COMPARATIVO -->
         <section id="plataformas">
             <div class="reveal">
                 <div class="section-label">02 · Comparativo de Plataformas</div>
@@ -1155,7 +1132,6 @@
                 </div>
             </div>
 
-            <!-- PLATFORM DETAILS -->
             <div class="platform-section reveal" style="margin-top:3rem;">
                 <div class="platform-header">
                     <div class="platform-icon icon-gray">💬</div>
@@ -1292,7 +1268,6 @@
 
         <div class="divider"></div>
 
-        <!-- PIPELINE -->
         <section id="pipeline">
             <div class="reveal">
                 <div class="section-label">03 · Fluxo Operacional</div>
@@ -1405,7 +1380,6 @@
 
         <div class="divider"></div>
 
-        <!-- ARQUITETURA -->
         <section id="arquitetura">
             <div class="reveal">
                 <div class="section-label">04 · Arquitetura</div>
@@ -1467,7 +1441,6 @@
                 <div class="info-box-componente" style="margin-top: 2rem;">
                     <h4>SharePoint</h4>
                     <ul>
-
                         <li>Atua como repositório corporativo central dos boletins, versões e documentos relacionados
                         </li>
                         <li>Permite versionamento nativo, controle documental e governança de acesso integrada ao
@@ -1622,7 +1595,6 @@
 
         <div class="divider"></div>
 
-        <!-- CUSTOS -->
         <section id="custos">
             <div class="reveal">
                 <div class="section-label">05 · Estimativa de Custos</div>
@@ -1713,7 +1685,6 @@
 
         <div class="divider"></div>
 
-        <!-- EVOLUÇÃO FUTURA -->
         <section id="evolucao">
             <div class="reveal">
                 <div class="section-label">06 · Evolução Futura</div>
@@ -1776,7 +1747,6 @@
 
         <div class="divider"></div>
 
-        <!-- RISCOS E PREMISSAS -->
         <section id="riscos">
             <div class="reveal">
                 <div class="section-label">07 · Riscos e Premissas</div>
@@ -1817,7 +1787,6 @@
 
         <div class="divider"></div>
 
-        <!-- CONCLUSÃO -->
         <section id="conclusao">
             <div class="reveal">
                 <div class="section-label">08 · Conclusão Executiva</div>
