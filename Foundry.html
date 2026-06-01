@@ -1,1 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Inteligência Regulatória para Adquirência</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000050;
+            color: #ffffff;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+        .accent-border {
+            border-left: 4px solid #3b82f6;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 leading-relaxed">
+
+    <!-- Header / Visão Executiva -->
+    <header class="max-w-5xl mx-auto mb-16 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight">Plataforma de Inteligência Regulatória</h1>
+        <p class="text-xl text-blue-200 max-w-3xl mx-auto">
+            Transformando boletins de bandeiras em demandas prontas para implementação.
+        </p>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-12">
+
+        <!-- Visão Executiva e Problema -->
+        <section class="grid md:grid-cols-2 gap-8">
+            <div class="glass-card p-8">
+                <h2 class="text-2xl font-bold mb-6 text-blue-400">Problema Atual</h2>
+                <div class="space-y-4 opacity-90">
+                    <p class="flex items-center">Boletim Visa/Mastercard → Analista → Documento Funcional → Equipe PL/1 → Implementação</p>
+                    <ul class="list-disc pl-5 space-y-2 text-sm">
+                        <li>Dependência de conhecimento humano e leitura repetitiva.</li>
+                        <li>Risco de perda de itens mandatórios.</li>
+                        <li>Falta de rastreabilidade e tempo elevado de resposta.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="glass-card p-8 border-t-4 border-blue-500">
+                <h2 class="text-2xl font-bold mb-6 text-blue-400">Estado Futuro</h2>
+                <div class="flex flex-col space-y-2 text-center font-semibold text-sm">
+                    <div class="p-2 bg-blue-900 rounded">SharePoint</div>
+                    <div class="text-blue-400">↓</div>
+                    <div class="p-2 bg-blue-800 rounded">Agente IA (Identificação & Classificação)</div>
+                    <div class="text-blue-400">↓</div>
+                    <div class="p-2 bg-blue-700 rounded">Geração de Caso de Uso e História Técnica</div>
+                    <div class="text-blue-400">↓</div>
+                    <div class="p-2 bg-blue-600 rounded text-white">Sugestão de Código PL/1 e Portal / Copilot</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Arquitetura Recomendada -->
+        <section class="glass-card p-8">
+            <h2 class="text-3xl font-bold mb-8 text-center">Arquitetura Recomendada</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="accent-border p-4 bg-white/5">
+                    <h3 class="font-bold text-blue-300 mb-2">Camada de Conhecimento</h3>
+                    <p class="text-xs uppercase tracking-wider mb-2 text-gray-400">Fonte Única: SharePoint</p>
+                    <p class="text-sm">Visa, Mastercard, Elo, Amex, Manuais POS, Layouts Batch e Docs Internos.</p>
+                </div>
+                <div class="accent-border p-4 bg-white/5">
+                    <h3 class="font-bold text-blue-300 mb-2">Camada de Ingestão</h3>
+                    <p class="text-xs uppercase tracking-wider mb-2 text-gray-400">C# + .NET / Azure Functions</p>
+                    <p class="text-sm">Azure AI Document Intelligence para extração de tabelas, anexos, datas e regras.</p>
+                </div>
+                <div class="accent-border p-4 bg-white/5">
+                    <h3 class="font-bold text-blue-300 mb-2">Camada Vetorial</h3>
+                    <p class="text-xs uppercase tracking-wider mb-2 text-gray-400">Azure AI Search</p>
+                    <p class="text-sm">Indexação por Bandeira, Mandatoriedade e Áreas Impactadas (Settlement, Chargeback).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Camada Foundry - Agentes -->
+        <section>
+            <h2 class="text-3xl font-bold mb-4">Camada Foundry</h2>
+            <p class="mb-8 text-blue-300">Diferencial: Ecossistema de agentes especializados em vez de um chatbot genérico.</p>
+            
+            <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div class="glass-card p-4 text-sm">
+                    <h4 class="font-bold border-b border-blue-800 pb-2 mb-2">Agente 1: Relevância</h4>
+                    <p class="text-xs opacity-80">Filtra Adquirência (POS, Batch, Conciliação).</p>
+                </div>
+                <div class="glass-card p-4 text-sm">
+                    <h4 class="font-bold border-b border-blue-800 pb-2 mb-2">Agente 2: Mandatoriedade</h4>
+                    <p class="text-xs opacity-80">Detecta prazos e flags de Compliance.</p>
+                </div>
+                <div class="glass-card p-4 text-sm">
+                    <h4 class="font-bold border-b border-blue-800 pb-2 mb-2">Agente 3: Impacto Técnico</h4>
+                    <p class="text-xs opacity-80">Classifica domínios de impacto (Alto/Baixo).</p>
+                </div>
+                <div class="glass-card p-4 text-sm">
+                    <h4 class="font-bold border-b border-blue-800 pb-2 mb-2">Agente 4: Caso de Uso</h4>
+                    <p class="text-xs opacity-80">Gera Fluxo Futuro e Critérios de Aceite.</p>
+                </div>
+                <div class="glass-card p-4 text-sm">
+                    <h4 class="font-bold border-b border-blue-800 pb-2 mb-2">Agente 5: Especialista PL/1</h4>
+                    <p class="text-xs opacity-80">Sugere alterações em Copybooks e JCLs.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Governança e UI -->
+        <section class="grid md:grid-cols-2 gap-8">
+            <div class="glass-card p-8">
+                <h2 class="text-2xl font-bold mb-6 text-blue-400">Governança & Auditoria</h2>
+                <ul class="space-y-4 text-sm">
+                    <li><strong>Identidade:</strong> Microsoft Entra ID (SSO/RBAC).</li>
+                    <li><strong>Auditoria:</strong> Azure SQL (Quem, quando e o que consultou).</li>
+                    <li><strong>Observabilidade:</strong> Azure Monitor e Prompt Versioning no Foundry.</li>
+                </ul>
+            </div>
+            <div class="glass-card p-8">
+                <h2 class="text-2xl font-bold mb-6 text-blue-400">Interface (UI/UX)</h2>
+                <p class="text-sm mb-4"><strong>Recomendação:</strong> Arquitetura Híbrida (React para Dashboards + Copilot Studio para Teams).</p>
+                <div class="bg-black/30 p-4 rounded text-xs font-mono">
+                    Next.js | TypeScript | Tailwind | C# API
+                </div>
+            </div>
+        </section>
+
+        <!-- MVP Roadmap -->
+        <section class="glass-card p-8">
+            <h2 class="text-3xl font-bold mb-8 text-center">MVP de 8 Semanas</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2 text-center text-[10px]">
+                <div class="p-2 bg-blue-900 rounded">S1: SharePoint</div>
+                <div class="p-2 bg-blue-800 rounded">S2: Doc Intel</div>
+                <div class="p-2 bg-blue-700 rounded">S3: AI Search</div>
+                <div class="p-2 bg-blue-600 rounded">S4: Ag. Mandat.</div>
+                <div class="p-2 bg-blue-500 rounded">S5: Ag. Impacto</div>
+                <div class="p-2 bg-blue-400 rounded">S6: Ag. Casos</div>
+                <div class="p-2 bg-blue-300 text-blue-900 font-bold rounded">S7: React</div>
+                <div class="p-2 bg-blue-200 text-blue-900 font-bold rounded">S8: Copilot</div>
+            </div>
+        </section>
+
+        <!-- Custos e Argumento Final -->
+        <footer class="grid md:grid-cols-2 gap-8 pb-16">
+            <div class="p-6 bg-white/10 rounded-lg">
+                <h3 class="text-xl font-bold mb-4">Custos de Piloto (Est.)</h3>
+                <p class="text-sm opacity-80 mb-2">1.000 boletins / 20 usuários</p>
+                <p class="text-2xl font-bold text-green-400">R$ 1.000 – 3.000 <span class="text-sm font-normal text-white">/mês</span></p>
+            </div>
+            <div class="p-6 bg-blue-600 rounded-lg">
+                <h3 class="text-xl font-bold mb-2">O Argumento para Gestão</h3>
+                <p class="text-sm italic">
+                    "Não é um chatbot. É uma plataforma de inteligência regulatória para adquirência que garante compliance, mapeia impactos técnicos em sistemas legados e acelera a produtividade da engenharia com governança bancária."
+                </p>
+            </div>
+        </footer>
+
+    </main>
+</body>
+</html>
 
