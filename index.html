@@ -46,7 +46,7 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-        
+
         nav {
             position: fixed;
             top: 0;
@@ -312,16 +312,16 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.85rem;
+            font-size: 0.83rem;
         }
 
         thead th {
             background: var(--surface2);
-            padding: 0.9rem 1.1rem;
+            padding: 0.9rem 1rem;
             text-align: left;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.78rem;
-            letter-spacing: 0.06em;
+            font-size: 0.74rem;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
             color: var(--text-muted);
             border-bottom: 1px solid var(--border-strong);
@@ -342,7 +342,7 @@
         }
 
         td {
-            padding: 0.85rem 1.1rem;
+            padding: 0.8rem 1rem;
             color: var(--text-dim);
             vertical-align: middle;
         }
@@ -350,6 +350,7 @@
         td:first-child {
             color: var(--text);
             font-weight: 500;
+            white-space: nowrap;
         }
 
         .th-copilot {
@@ -362,6 +363,10 @@
 
         .th-studio {
             color: var(--accent3) !important;
+        }
+
+        .th-foundry {
+            color: var(--accent2) !important;
         }
 
         .tag-low {
@@ -381,6 +386,11 @@
 
         .tag-native {
             color: var(--accent);
+            font-size: 0.8rem;
+        }
+
+        .tag-foundry {
+            color: var(--accent2);
             font-size: 0.8rem;
         }
 
@@ -421,6 +431,11 @@
             border: 1px solid rgba(16, 185, 129, 0.2);
         }
 
+        .icon-indigo {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
         .verdict-badge {
             display: inline-flex;
             align-items: center;
@@ -448,6 +463,12 @@
             background: rgba(16, 185, 129, 0.1);
             color: var(--accent3);
             border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .verdict-cond {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--accent2);
+            border: 1px solid rgba(99, 102, 241, 0.2);
         }
 
         .detail-grid {
@@ -501,6 +522,7 @@
             font-size: 0.82rem;
             color: var(--text-muted);
         }
+
         .pipeline {
             display: flex;
             flex-direction: column;
@@ -811,6 +833,11 @@
             border-color: rgba(16, 185, 129, 0.2);
         }
 
+        .conclusion-card.cond {
+            background: rgba(99, 102, 241, 0.05);
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+
         .conclusion-verdict {
             font-size: 1.6rem;
             margin-bottom: 0.6rem;
@@ -956,13 +983,15 @@
     <main>
 
         <div class="hero">
-            <div class="hero-eyebrow">Análise Técnica · Enterprise AI</div>
+            <div class="hero-eyebrow">Análise Técnica · Enterprise AI · Atualizado jun/2026</div>
             <h1 class="hero-title">Solução Corporativa de IA<br><span>para Análise de Boletins de Bandeira</span></h1>
-            <p class="hero-sub">Avaliação de plataformas Microsoft Copilot, arquitetura de agente enterprise e roadmap
-                de implementação para processamento inteligente de documentos regulatórios.</p>
+            <p class="hero-sub">Avaliação de plataformas Microsoft para arquitetura de agente
+                enterprise para processamento inteligente de documentos regulatórios das bandeiras Mastercarr, Visa, Elo
+                e Amex.</p>
             <div class="hero-badges">
                 <span class="badge">RAG / Document Intelligence</span>
                 <span class="badge">Microsoft Copilot Studio</span>
+                <span class="badge">Microsoft Foundry</span>
                 <span class="badge">SharePoint + Power Automate</span>
                 <span class="badge">Azure OpenAI</span>
                 <span class="badge">Sistemas Legados PL/I</span>
@@ -1016,9 +1045,9 @@
         <section id="plataformas">
             <div class="reveal">
                 <div class="section-label">02 · Comparativo de Plataformas</div>
-                <h2>Copilot Chat vs M365 Copilot vs Copilot Studio</h2>
-                <p>Avaliação técnica das três opções disponíveis no ecossistema Microsoft frente aos requisitos do
-                    cenário corporativo.</p>
+                <h2>Copilot Chat - M365 Copilot - Copilot Studio - Microsoft Foundry</h2>
+                <p>Avaliação das quatros opções disponíveis no ecossistema Microsoft frente aos requisitos do cenário
+                    corporativo.</p>
 
                 <div class="table-wrap">
                     <table>
@@ -1028,6 +1057,7 @@
                                 <th class="th-copilot">Copilot Chat</th>
                                 <th class="th-m365">M365 Copilot</th>
                                 <th class="th-studio">Copilot Studio</th>
+                                <th class="th-foundry">Microsoft Foundry</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1035,91 +1065,135 @@
                                 <td>Objetivo principal</td>
                                 <td>Assistente individual</td>
                                 <td>Assist. corporativo contextual</td>
-                                <td>Plataforma enterprise p/ agentes</td>
+                                <td>Plataforma low-code</td>
+                                <td>Plataforma pro-code</td>
+                            </tr>
+                            <tr>
+                                <td>Modelo de cobrança</td>
+                                <td>Licença por usuário</td>
+                                <td>Licença por usuário</td>
+                                <td>Copilot Credit (Pay-As-You-Go/Pacote)</td>
+                                <td>Sem taxa de plataforma — pagamento por uso de tokens</td>
                             </tr>
                             <tr>
                                 <td>Criação de agente corporativo</td>
                                 <td class="tag-low">Limitada</td>
                                 <td class="tag-mid">Parcial</td>
                                 <td class="tag-high">Completa</td>
+                                <td class="tag-foundry">Completa (código/SDK)</td>
                             </tr>
                             <tr>
                                 <td>Compartilhamento organizacional</td>
                                 <td class="tag-low">Restrito</td>
                                 <td class="tag-mid">Bom</td>
                                 <td class="tag-high">Avançado</td>
+                                <td class="tag-foundry">Avançado</td>
                             </tr>
                             <tr>
                                 <td>Integração SharePoint</td>
                                 <td class="tag-low">Limitada</td>
                                 <td class="tag-native">Nativa</td>
                                 <td class="tag-native">Nativa</td>
+                                <td class="tag-foundry">Nativa</td>
                             </tr>
                             <tr>
                                 <td>Processamento documental</td>
                                 <td class="tag-low">Básico</td>
                                 <td class="tag-mid">Intermediário</td>
                                 <td class="tag-high">Avançado</td>
+                                <td class="tag-foundry">Avançado (pipeline próprio)</td>
                             </tr>
                             <tr>
                                 <td>Automação de workflows</td>
                                 <td class="tag-low">Não suportado</td>
                                 <td class="tag-mid">Parcial</td>
                                 <td class="tag-high">Completo</td>
+                                <td class="tag-foundry">Completo (via código)</td>
                             </tr>
                             <tr>
                                 <td>Governança corporativa (RBAC)</td>
                                 <td class="tag-low">Baixa</td>
                                 <td class="tag-mid">Média/Alta</td>
                                 <td class="tag-high">Granular</td>
+                                <td class="tag-foundry">Granular</td>
                             </tr>
                             <tr>
                                 <td>Integração Oracle</td>
                                 <td class="tag-low">Limitada</td>
                                 <td class="tag-mid">Parcial</td>
                                 <td class="tag-high">Avançada</td>
+                                <td class="tag-foundry">Avançada (SDK próprio)</td>
                             </tr>
                             <tr>
                                 <td>Microsoft Graph</td>
                                 <td class="tag-mid">Parcial</td>
                                 <td class="tag-native">Nativa</td>
                                 <td class="tag-native">Nativa</td>
+                                <td class="tag-foundry">Disponível</td>
                             </tr>
                             <tr>
                                 <td>GitHub / Azure DevOps</td>
                                 <td class="tag-low">Básica</td>
                                 <td class="tag-mid">Parcial</td>
                                 <td class="tag-high">Boa</td>
+                                <td class="tag-foundry">Boa</td>
                             </tr>
                             <tr>
                                 <td>APIs externas</td>
                                 <td class="tag-low">Limitada</td>
                                 <td class="tag-mid">Média</td>
                                 <td class="tag-high">Avançada</td>
+                                <td class="tag-foundry">Avançada</td>
                             </tr>
+                            <tr>
+                                <td>Escolha de modelo de IA</td>
+                                <td>Fixo (Microsoft)</td>
+                                <td>Fixo (Microsoft)</td>
+                                <td>Modelos padrão Microsoft</td>
+                                <td>Milhares de modelos (GPT, Llama, DeepSeek, Grok)</td>
+                            </tr>
+                            <tr>
+                                <td>Multiagente / agente-a-agente</td>
+                                <td class="tag-low">Não</td>
+                                <td class="tag-low">Não</td>
+                                <td class="tag-mid">Limitado</td>
+                                <td class="tag-foundry">Nativo</td>
+                            </tr>
+                            <tr>
+                                <td>Complexidade de implementação</td>
+                                <td>Mínima</td>
+                                <td>Mínima</td>
+                                <td>Baixa (low-code)</td>
+                                <td>Alta (pro-code)</td>
+                            </tr>
+
                             <tr>
                                 <td>Gestão DEV / HML / PRD</td>
                                 <td class="tag-low">Não suportado</td>
                                 <td class="tag-low">Limitada</td>
                                 <td class="tag-high">Suportado</td>
+                                <td class="tag-foundry">Suportado
                             </tr>
                             <tr>
                                 <td>Auditoria e rastreabilidade</td>
                                 <td class="tag-low">Básica</td>
                                 <td class="tag-mid">Média</td>
                                 <td class="tag-high">Avançada</td>
+                                <td class="tag-foundry">Avançada</td>
                             </tr>
                             <tr>
                                 <td>Escalabilidade</td>
                                 <td class="tag-low">Baixa</td>
                                 <td class="tag-mid">Média</td>
                                 <td class="tag-high">Alta</td>
+                                <td class="tag-foundry">Alta</td>
                             </tr>
                             <tr>
                                 <td>Aderência ao cenário</td>
                                 <td class="tag-low">Baixa</td>
                                 <td class="tag-mid">Média</td>
                                 <td class="tag-high">Alta</td>
+                                <td class="tag-foundry">Alta</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1138,8 +1212,8 @@
                     automação necessários para operação enterprise de análise regulatória.</p>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <div class="label">Custo (16 usuários)</div>
-                        <div class="value">~R$ 1.700–2.000/mês</div>
+                        <div class="label">Modelo de cobrança</div>
+                        <div class="value">Licença por usuário</div>
                     </div>
                     <div class="detail-item">
                         <div class="label">Persistência contextual</div>
@@ -1178,8 +1252,8 @@
                     automações multiestágio.</p>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <div class="label">Custo (16 usuários)</div>
-                        <div class="value">~R$ 2.600–3.000/mês</div>
+                        <div class="label">Modelo de cobrança</div>
+                        <div class="value">Licença por usuário</div>
                     </div>
                     <div class="detail-item">
                         <div class="label">SharePoint</div>
@@ -1210,15 +1284,15 @@
                     <div class="platform-icon icon-green">⚙️</div>
                     <div>
                         <h3>3. Microsoft Copilot Studio</h3>
-                        <div class="verdict-badge verdict-yes">✅ Melhor aderência técnica e corporativa</div>
+                        <div class="verdict-badge verdict-yes">✅ Boa aderência técnica e corporativa</div>
                     </div>
                 </div>
                 <p>Plataforma projetada para criação de agentes enterprise com capacidades avançadas de orquestração,
-                    integração e governança. É o núcleo recomendado para esta solução.</p>
+                    integração e governança, em modelo low-code.</p>
                 <div class="detail-grid">
                     <div class="detail-item">
                         <div class="label">Tipo de solução</div>
-                        <div class="value">Agente enterprise customizado</div>
+                        <div class="value">Agente enterprise low-code</div>
                     </div>
                     <div class="detail-item">
                         <div class="label">Ambientes DEV/HML/PRD</div>
@@ -1246,15 +1320,70 @@
                     style="margin-top:1rem; background: rgba(99,102,241,0.05); border-color: rgba(99,102,241,0.2);">
                     <h4 style="color: var(--accent2);">⚠ Pontos de atenção no Copilot Studio</h4>
                     <ul>
-                        <li>Requer licença Copilot Studio add-on (separada do M365 Copilot) ou Power Virtual Agents
-                            Premium</li>
+                        <li>Requer licença Copilot Studio add-on (separada do M365 Copilot) ou pay-as-you-go via Azure
+                        </li>
                         <li>Processamento de PDFs longos e OCR pode demandar Azure AI Document Intelligence complementar
                         </li>
                         <li>Comparação semântica entre versões exige design cuidadoso do pipeline de RAG</li>
                         <li>Gestão de ambientes (ALM) requer Power Platform ALM + Azure DevOps configurados</li>
-                        <li>Limites de tokens por chamada ao Azure OpenAI devem ser planejados para documentos extensos
+                        <li>Cobrança em Copilot Credits, com consumo variável por ação/ferramenta acionada pelo agente
                         </li>
-                        <li>Custo variável de acordo com número de mensagens processadas pelo agente</li>
+                        <li>Multiagente é limitado em comparação a plataformas pro-code dedicadas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="platform-section reveal" style="margin-top:2.5rem;">
+                <div class="platform-header">
+                    <div class="platform-icon icon-indigo">🧠</div>
+                    <div>
+                        <h3>4. Microsoft Foundry</h3>
+                        <div class="verdict-badge verdict-cond">🔷 Núcleo de IA/RAG quando há time de desenvolvimento
+                        </div>
+                    </div>
+                </div>
+                <p>Plataforma pro-code para construir, hospedar e orquestrar agentes e modelos de IA, com acesso a um
+                    catálogo aberto de modelos e suporte nativo a arquiteturas multiagente. Não substitui o Copilot
+                    Studio como camada conversacional — atua como o motor por trás dela quando o cenário exige mais
+                    controle do que o low-code permite.</p>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="label">Tipo de solução</div>
+                        <div class="value">Agentes pro-code via SDK/portal</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Cobrança da plataforma</div>
+                        <div class="value">Consumo de tokens + ferramentas</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Catálogo de modelos</div>
+                        <div class="value">Milhares (GPT, Llama, DeepSeek entre outros)</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Multiagente</div>
+                        <div class="value">Nativo + protocolo A2A*</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">RBAC / Identidade</div>
+                        <div class="value">Entra ID + isolamento de rede</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Vendor lock-in</div>
+                        <div class="value">Baixo (frameworks abertos)</div>
+                    </div>
+                </div>
+
+                <div class="alert-box"
+                    style="margin-top:1rem; background: rgba(99,102,241,0.05); border-color: rgba(99,102,241,0.2);">
+                    <h4 style="color: var(--accent2);">⚠ Pontos de atenção no Microsoft Foundry</h4>
+                    <ul>
+                        <li>Exige time de desenvolvimento — não é low-code, é construção via código/SDK</li>
+                        <li>Sem automação visual equivalente ao Power Automate; orquestração é responsabilidade do time
+                            de desenvolvimento
+                        </li>
+                        <li>Governança de ambientes (DEV/HML/PRD) não vem pronta como no Power Platform ALM</li>
+                        <li>Maior esforço inicial de setup, compensado por mais controle e portabilidade no longo prazo
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -1317,12 +1446,13 @@
                     <div class="pipe-step">
                         <div class="pipe-num">4</div>
                         <div class="pipe-content">
-                            <h4>Análise pelo agente Copilot Studio + Azure OpenAI</h4>
+                            <h4>Análise pelo agente (Copilot Studio e/ou Microsoft Foundry) + Azure OpenAI</h4>
                             <p>O agente executa a análise inteligente do boletim com base no contexto extraído e nas
                                 versões anteriores indexadas.</p>
                             <div class="pipe-tags">
                                 <span class="pipe-tag">Copilot Studio</span>
-                                <span class="pipe-tag">Azure OpenAI (GPT-4o)</span>
+                                <span class="pipe-tag purple">Microsoft Foundry</span>
+                                <span class="pipe-tag">Azure OpenAI</span>
                                 <span class="pipe-tag green">RAG</span>
                             </div>
                             <div style="margin-top:0.75rem;" class="info-box">
@@ -1387,8 +1517,12 @@
                         <div class="arch-tech">SharePoint</div>
                     </div>
                     <div class="arch-item">
-                        <div class="arch-layer">Agente corporativo</div>
+                        <div class="arch-layer">Agente corporativo (low-code)</div>
                         <div class="arch-tech">Copilot Studio</div>
+                    </div>
+                    <div class="arch-item">
+                        <div class="arch-layer">Agentes / modelos (pro-code)</div>
+                        <div class="arch-tech">Microsoft Foundry</div>
                     </div>
                     <div class="arch-item">
                         <div class="arch-layer">Workflow e orquestração</div>
@@ -1396,7 +1530,7 @@
                     </div>
                     <div class="arch-item">
                         <div class="arch-layer">IA generativa</div>
-                        <div class="arch-tech">Azure OpenAI (GPT-4o)</div>
+                        <div class="arch-tech">Azure OpenAI (via Foundry Models)</div>
                     </div>
                     <div class="arch-item">
                         <div class="arch-layer">Extração documental / OCR</div>
@@ -1404,7 +1538,7 @@
                     </div>
                     <div class="arch-item">
                         <div class="arch-layer">Busca semântica / RAG</div>
-                        <div class="arch-tech">Azure AI Search</div>
+                        <div class="arch-tech">Azure AI Search (Foundry IQ)</div>
                     </div>
                     <div class="arch-item">
                         <div class="arch-layer">Contextualização organizacional</div>
@@ -1430,6 +1564,10 @@
                         <div class="arch-layer">Integração sistemas legados</div>
                         <div class="arch-tech">API Gateway / Azure Logic Apps</div>
                     </div>
+                    <div class="arch-item">
+                        <div class="arch-layer">Comunicação agente-a-agente</div>
+                        <div class="arch-tech">Protocolo A2A*</div>
+                    </div>
                 </div>
 
                 <div class="info-box-componente" style="margin-top: 2rem;">
@@ -1449,14 +1587,27 @@
                 <div class="info-box-componente" style="margin-top: 2rem;">
                     <h4>Copilot Studio</h4>
                     <ul>
-                        <li>É a plataforma responsável pela construção, orquestração e publicação do agente
+                        <li>É a plataforma low-code responsável pela construção, orquestração e publicação do agente
                             conversacional corporativo</li>
                         <li>Permite integrar Azure AI Search, fluxos do Power Automate e serviços cognitivos em uma
                             experiência unificada</li>
                         <li>Centraliza intents, prompts, memória contextual e regras de interação do agente
                             especializado em compliance e boletins</li>
                         <li>Sem ele, não existe uma camada de experiência conversacional corporativa integrada aos
-                            serviços de IA da Microsoft</li>
+                            serviços de IA da Microsoft sem desenvolvimento customizado</li>
+                    </ul>
+                </div>
+                <div class="info-box-componente" style="margin-top: 2rem;">
+                    <h4>Microsoft Foundry</h4>
+                    <ul>
+                        <li>É a plataforma pro-code para construir, hospedar e orquestrar agentes de IA com controle
+                            total sobre modelo, lógica e infraestrutura</li>
+                        <li>Permite acessar um catálogo com milhares modelos (OpenAI, Llama, DeepSeek, Grok,
+                            Mistral, entre outros), além de orquestração multiagente nativa</li>
+                        <li>Não tem cobrança de plataforma — o custo de tokens de modelo e ferramentas/conectores
+                            usados pelos agentes</li>
+                        <li>Sem ele, a solução fica limitada aos modelos e à lógica de orquestração nativos do Copilot
+                            Studio, sem o controle pro-code necessário para arquiteturas multiagente mais complexas</li>
                     </ul>
                 </div>
                 <div class="info-box-componente" style="margin-top: 2rem;">
@@ -1473,7 +1624,7 @@
                     </ul>
                 </div>
                 <div class="info-box-componente" style="margin-top: 2rem;">
-                    <h4>Azure OpenAI (GPT-4o)</h4>
+                    <h4>Azure OpenAI (via Foundry Models)</h4>
                     <ul>
                         <li>É o modelo de linguagem responsável pela interpretação contextual, reasoning e geração das
                             respostas do agente</li>
@@ -1499,11 +1650,12 @@
                     </ul>
                 </div>
                 <div class="info-box-componente" style="margin-top: 2rem;">
-                    <h4>Azure AI Search</h4>
+                    <h4>Azure AI Search (Foundry IQ)</h4>
                     <ul>
                         <li>É o mecanismo de índice vetorial que viabiliza o RAG sobre os boletins indexados</li>
                         <li>Permite busca semântica e comparação entre versões com contexto enriquecido</li>
-                        <li>Se integra nativamente ao Copilot Studio como knowledge source customizado</li>
+                        <li>Se integra nativamente ao Copilot Studio e ao Microsoft Foundry como fonte de conhecimento
+                            customizada</li>
                         <li>Sem ele, o agente não consegue comparar versões de forma estruturada e rastreável</li>
                     </ul>
                 </div>
@@ -1550,8 +1702,8 @@
                         <li>Atua como camada de produtividade inteligente integrada ao ecossistema Microsoft 365</li>
                         <li>Permite consumir informações corporativas, documentos e insights diretamente em aplicações
                             como Teams, Outlook, Word e Excel</li>
-                        <li>Pode utilizar os agentes especializados desenvolvidos no Copilot Studio como extensões
-                            contextuais de negócio</li>
+                        <li>Pode utilizar os agentes especializados desenvolvidos no Copilot Studio ou no Microsoft
+                            Foundry como extensões contextuais de negócio</li>
                         <li>Sem ele, os usuários perdem a experiência de IA integrada ao fluxo operacional diário dentro
                             das ferramentas corporativas</li>
                     </ul>
@@ -1585,6 +1737,21 @@
                     </ul>
                 </div>
             </div>
+            <div class="info-box-componente" style="margin-top: 2rem;">
+                <h4>Protocolo A2A (Agent-to-Agent)</h4>
+                <ul>
+                    <li>Protocolo (em preview) que permite comunicação direta entre agentes independentes,
+                        possibilitando arquiteturas multiagente onde cada agente tem uma responsabilidade
+                        especializada</li>
+                    <li>Viabiliza que agentes especializados do pipeline se comuniquem entre si dentro do Microsoft
+                        Foundry, em vez de uma lógica monolítica única</li>
+                    <li>Permite que agentes construídos em frameworks diferentes (Agent Framework, LangGraph, SDKs
+                        de terceiros) troquem tarefas e resultados de forma padronizada</li>
+                    <li>Sem ele, a orquestração entre agentes especializados dependeria de integrações customizadas
+                        e ponto-a-ponto, aumentando o acoplamento e a complexidade de manutenção</li>
+                </ul>
+            </div>
+            </div>
         </section>
 
         <div class="divider"></div>
@@ -1593,85 +1760,80 @@
             <div class="reveal">
                 <div class="section-label">05 · Estimativa de Custos</div>
                 <h2>Investimento mensal estimado</h2>
-                <p>Custos baseados em volume moderado de documentos, 16 usuários e frequência regular de processamento.
-                    Valores em USD com referência aproximada em BRL.</p>
+                <p>Estrutura de custo por categoria. Valores específicos em R$/US$ dependem de região, moeda e volume
+                    real — recomenda-se usar a calculadora oficial da Azure (azure.microsoft.com/pricing/calculator)
+                    configurada para a região e moeda da organização antes de fechar orçamento.</p>
 
                 <div class="grid-2">
                     <div class="card card-accent-blue">
-                        <h3>Cenário Núcleo (Copilot Studio)</h3>
+                        <h3>Núcleo Copilot Studio</h3>
                         <table class="cost-table">
                             <tr>
-                                <td>Copilot Studio (licença + mensagens)</td>
-                                <td class="cost-range">US$ 200–500/mês</td>
+                                <td>Copilot Studio (Copilot Credits)</td>
+                                <td class="cost-range">Pay-As-You-Go ou pacote prepago</td>
                             </tr>
                             <tr>
                                 <td>Azure OpenAI (tokens)</td>
-                                <td class="cost-range">US$ 50–300/mês</td>
+                                <td class="cost-range">Por token entrada/saída</td>
                             </tr>
                             <tr>
                                 <td>Power Automate (Premium)</td>
-                                <td class="cost-range">US$ 100–300/mês</td>
+                                <td class="cost-range">Licença + execuções</td>
                             </tr>
                             <tr>
                                 <td>Azure AI Document Intelligence</td>
-                                <td class="cost-range">US$ 30–150/mês</td>
+                                <td class="cost-range">Por página/documento</td>
                             </tr>
                             <tr>
                                 <td>Azure AI Search</td>
-                                <td class="cost-range">US$ 50–200/mês</td>
+                                <td class="cost-range">Por capacidade ou Compute Unit</td>
                             </tr>
                             <tr class="cost-total">
-                                <td>Total estimado</td>
-                                <td class="cost-range">US$ 430–1.450/mês</td>
+                                <td>Modelo de cobrança</td>
+                                <td class="cost-range">Consumo variável</td>
                             </tr>
                         </table>
-                        <div class="cost-highlight">
-                            <div>
-                                <div class="cost-number">R$ 2.400–8.000</div>
-                                <div class="cost-sub">estimativa mensal em BRL (câmbio ~5,5)</div>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="card card-accent-indigo">
-                        <h3>Camada Complementar (M365 Copilot)</h3>
+                        <h3>Núcleo Microsoft Foundry</h3>
                         <table class="cost-table">
                             <tr>
-                                <td>M365 Copilot (16 usuários × US$30)</td>
-                                <td class="cost-range">US$ 480/mês</td>
+                                <td>Foundry Agent Service</td>
+                                <td class="cost-range">Sem cobrança de plataforma</td>
                             </tr>
                             <tr>
-                                <td>SharePoint (já incluso no M365)</td>
-                                <td class="cost-range">—</td>
+                                <td>Foundry Models (tokens)</td>
+                                <td class="cost-range">Por token entrada/saída</td>
                             </tr>
                             <tr>
-                                <td>Teams (já incluso no M365)</td>
-                                <td class="cost-range">—</td>
+                                <td>Foundry Tools / conectores</td>
+                                <td class="cost-range">Por ferramenta conectada</td>
+                            </tr>
+                            <tr>
+                                <td>Foundry IQ (Azure AI Search)</td>
+                                <td class="cost-range">Por capacidade ou Compute Unit</td>
                             </tr>
                             <tr class="cost-total">
-                                <td>Total complementar</td>
-                                <td class="cost-range">US$ 480/mês</td>
+                                <td>Modelo de cobrança</td>
+                                <td class="cost-range">Consumo de tokens + ferramentas</td>
                             </tr>
                         </table>
-                        <div class="cost-highlight">
-                            <div>
-                                <div class="cost-number">R$ 2.600–3.000</div>
-                                <div class="cost-sub">custo adicional da camada de produtividade</div>
-                            </div>
-                        </div>
-                        <p style="font-size:0.82rem; margin-top:0.75rem;">⚠ Verificar se a organização já possui
-                            licenças M365 E3/E5 elegíveis que cubram parte desse custo.</p>
                     </div>
                 </div>
+
 
                 <div class="alert-box" style="margin-top:1.5rem;">
                     <h4>Variáveis que impactam o custo</h4>
                     <ul>
                         <li>Volume de documentos processados por mês (número de boletins e páginas)</li>
-                        <li>Quantidade de mensagens trocadas com o agente (modelo de billing do Copilot Studio)</li>
+                        <li>Quantidade de Copilot Credits consumidos pelo agente (Copilot Studio) ou volume de tokens
+                            (Foundry)</li>
                         <li>Uso de OCR para documentos digitalizados (Azure AI Document Intelligence)</li>
-                        <li>Tamanho do índice vetorial no Azure AI Search</li>
+                        <li>Tamanho do índice vetorial no Azure AI Search / Foundry IQ</li>
                         <li>Licenças M365 já existentes na organização (redução de custo potencial)</li>
+                        <li>Escolha do modelo de IA — modelos menores (mini/nano) custam significativamente menos por
+                            token do que os modelos de maior capacidade</li>
                     </ul>
                 </div>
             </div>
@@ -1758,6 +1920,8 @@
                                 <li>Curva de adoção pelos times de desenvolvimento PL/I</li>
                                 <li>Gestão do modelo de custos variáveis conforme crescimento do volume</li>
                                 <li>Governança de dados sensíveis dentro do Azure OpenAI (LGPD)</li>
+                                <li>Se optar por Microsoft Foundry, necessidade de time com competência pro-code para
+                                    manter a solução</li>
                             </ul>
                         </div>
                     </div>
@@ -1768,7 +1932,8 @@
                                 <li>Licenças Azure e M365 provisionadas ou elegíveis para aquisição</li>
                                 <li>SharePoint configurado com estrutura de pastas e metadados definidos</li>
                                 <li>Azure OpenAI aprovado na subscrição (requer aprovação da Microsoft)</li>
-                                <li>Equipe com capacidade de configurar Power Automate + Copilot Studio</li>
+                                <li>Equipe com capacidade de configurar Power Automate + Copilot Studio, e/ou
+                                    desenvolvedores para Microsoft Foundry</li>
                                 <li>Definição de RBAC e grupos de usuários no Entra ID</li>
                                 <li>Inventário mínimo dos sistemas PL/I e domínios cobertos por cada bandeira</li>
                                 <li>Processo de validação humana definido antes da publicação dos artefatos</li>
@@ -1804,8 +1969,14 @@
                     <div class="conclusion-card yes">
                         <div class="conclusion-verdict">✅</div>
                         <h3>Copilot Studio</h3>
-                        <p>Núcleo da solução. Melhor aderência técnica e corporativa. Combinado com Azure OpenAI, AI
-                            Search e Power Automate forma o pipeline completo.</p>
+                        <p>Boa aderência técnica e corporativa em modelo low-code. Combinado com Azure OpenAI, AI
+                            Search e Power Automate forma um pipeline completo com menor esforço de engenharia.</p>
+                    </div>
+                    <div class="conclusion-card cond">
+                        <div class="conclusion-verdict">🔷</div>
+                        <h3>Microsoft Foundry</h3>
+                        <p>Recomendado como núcleo de IA/RAG quando há time de desenvolvimento, ou como evolução
+                            futura para arquiteturas multiagente e maior portabilidade de modelo.</p>
                     </div>
                 </div>
 
@@ -1813,23 +1984,27 @@
                     style="margin-top: 2rem; background: var(--surface2); border-color: var(--border-strong);">
                     <h3 style="margin-bottom:1rem;">Arquitetura alvo resumida</h3>
                     <p style="margin-bottom:1rem; font-size:0.9rem;"><strong>Repositório:</strong> SharePoint
-                        &nbsp;·&nbsp; <strong>Agente:</strong> Copilot Studio &nbsp;·&nbsp;
+                        &nbsp;·&nbsp; <strong>Agente low-code:</strong> Copilot Studio &nbsp;·&nbsp;
+                        <strong>Agentes/modelos pro-code:</strong> Microsoft Foundry &nbsp;·&nbsp;
                         <strong>Orquestração:</strong> Power Automate &nbsp;·&nbsp; <strong>IA:</strong> Azure OpenAI
-                        GPT-4o &nbsp;·&nbsp; <strong>OCR:</strong> Azure AI Document Intelligence &nbsp;·&nbsp;
-                        <strong>RAG:</strong> Azure AI Search &nbsp;·&nbsp; <strong>DevOps:</strong> Azure DevOps +
-                        GitHub &nbsp;·&nbsp; <strong>Produtividade:</strong> M365 Copilot
+                        via Foundry Models &nbsp;·&nbsp; <strong>OCR:</strong> Azure AI Document Intelligence
+                        &nbsp;·&nbsp; <strong>RAG:</strong> Azure AI Search / Foundry IQ &nbsp;·&nbsp;
+                        <strong>DevOps:</strong> Azure DevOps + GitHub &nbsp;·&nbsp; <strong>Produtividade:</strong>
+                        M365 Copilot
                     </p>
                     <p style="font-size:0.88rem; color:var(--text-muted); margin:0;">A solução não é apenas um chatbot
                         corporativo — é um pipeline de inteligência documental para operacionalização de mudanças
                         regulatórias, com rastreabilidade de ponta a ponta e evolução planejada para suporte ao
-                        desenvolvimento PL/I.</p>
+                        desenvolvimento PL/I. A escolha entre Copilot Studio e Microsoft Foundry como núcleo depende
+                        principalmente da maturidade de engenharia disponível e da necessidade de controle/portabilidade
+                        de modelo.</p>
                 </div>
             </div>
         </section>
 
         <footer>
             Análise técnica confidencial &nbsp;·&nbsp; Solução Corporativa de IA para Análise de Boletins de Bandeira
-            &nbsp;·&nbsp; 2026
+            &nbsp;·&nbsp; jun/2026
         </footer>
 
     </main>
