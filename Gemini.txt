@@ -1,0 +1,31 @@
+Com base exclusivamente no documento fornecido (**Pesquisa FEBRABAN de Tecnologia Bancária 2026 - Volume 1**), segue o resumo detalhado focado em todos os tópicos e métricas relacionados com **Inteligência Artificial (IA)** e **Inteligência Artificial Generativa (GenAI)**.
+### 1. Prioridade Estratégica e Orçamento em IA
+A Inteligência Artificial e a Inteligência Artificial Generativa se consolidaram como os temas mais quentes e prioritários no orçamento tecnológico dos bancos brasileiros.
+ * **Orçamento Direcionado:** Em 2025, os investimentos específicos destinados à Inteligência Artificial atingiram **R$ 596 milhões**.
+ * **Nível de Prioridade:** * **IA Tradicional:** **80%** dos bancos atribuem prioridade média ou alta para investimentos na área, sendo que **60%** classificam como prioridade alta e **20%** como média.
+   * **IA Generativa (GenAI):** **84%** das instituições atribuem prioridade média ou alta (**60%** prioridade alta e **24%** prioridade média).
+### 2. IA na Experiência do Cliente e Ganhos de Eficiência
+A experiência do cliente desponta como o principal alicerce para a diferenciação dos bancos, impulsionada pelas tecnologias analíticas e generativas.
+ * **Estágios de Implementação:** Atualmente, **20%** das instituições financeiras já utilizam IA em **larga escala/otimizada** para a experiência do cliente. Outras **56%** encontram-se em fase de exploração inicial ou escala limitada, enquanto **24%** ainda não a utilizam.
+ * **Aumento de Eficiência Operacional:** A implementação conjunta de IA e GenAI gerou um ganho médio de eficiência no atendimento de **10,3%** em 2025 (superando os 7% registrados em 2024).
+ * **Ganhos Elevados:** O percentual de bancos que alcançaram ganhos expressivos de eficiência (definidos como iguais ou superiores a 20% de ganho) saltou de **5% em 2024 para 19% em 2025**.
+ * **Casos de Uso e Aplicação:** * **71%** das instituições priorizam a expansão de transações via *chatbot*.
+   * **71%** priorizam o uso específico de IA Generativa (GenAI) diretamente no atendimento ao cliente.
+   * O nível de integração varia por ferramenta: **36%** dos bancos utilizam de forma integrada e em larga escala *chatbots* para atendimento, **28%** usam para apoiar os clientes durante o atendimento, e **26%** aplicam em processos de *onboarding* (automação e otimização da verificação de identidade).
+### 3. IA aplicada à Cibersegurança
+A segurança e privacidade de ponta figuram entre as estratégias mais críticas diferenciadoras dos bancos (**80%** de priorização), e a IA opera como uma aliada estratégica de defesa:
+ * **Formas de Utilização:**
+   * **77%** das instituições utilizam IA para **análise preditiva de riscos cibernéticos**.
+   * **77%** aplicam para a **detecção de ameaças e padrões anômalos**.
+   * **46%** adotam para a realização de **testes de intrusão**.
+   * **31%** usam a IA voltada à **automação de respostas a incidentes**.
+ * **Principais Desafios de Adoção:** O relatório aponta que a implementação de IA na segurança enfrenta barreiras organizacionais, sendo as principais:
+   1. Preocupações com privacidade, governança de dados e uso ético da IA (**68%**).
+   2. Escassez de profissionais com conhecimento técnico em IA aplicada à segurança (**40%**).
+   3. Dificuldade de integrar a inteligência artificial com sistemas legados e infraestruturas existentes (**32%**).
+### 4. IA como Habilitadora da Inovação e Nuvem (Cloud)
+ * **Apoio à Migração:** A nuvem é uma das principais alavancas de transformação bancária. No processo de migração de dados e infraestrutura para *cloud*, a IA também atua ativamente: **8%** dos bancos reportam uso intensivo e integrado de IA nesta migração, **12%** possuem uso avançado, **20%** uso moderado e **36%** uso pontual.
+ * **Exploração de Inovação:** Entre os bancos que elegem a inovação tecnológica como diferencial (**72%** da amostra), a **exploração de IA Generativa** é listada por **82%** deles como uma das principais iniciativas práticas (atrás apenas da migração de dados propriamente dita).
+### 5. Capacitação de Pessoas e Conscientização corporativa
+Dado o rápido avanço e impacto regulatório/operacional da inteligência artificial nas organizações, as instituições estão acelerando a preparação interna:
+ * **Conscientização:** Impressionantes **95%** dos bancos buscam ativamente conscientizar e treinar seus colaboradores sobre os impactos e o uso da inteligência artificial na rotina corporativa.
